@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio modular em widgets — HTML, CSS e JavaScript.">
+  <meta name="theme-color" content="#171717">
+  <title>Frank Oliveira — Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="site-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">FO</span><span data-bind="profile.name">Frank Oliveira</span></div>
+      <div class="topbar-meta">
+        <span class="status-dot"></span>
+        <span data-bind="profile.location">São Paulo, Brasil</span>
+      </div>
+    </header>
+
+    <section class="dashboard" aria-label="Portfólio em widgets">
+      <!-- 01 Fuso -->
+      <article class="widget time-widget">
+        <div class="widget-head"><span>Fuso:</span><span data-bind="profile.city">São Paulo</span></div>
+        <div class="clock-wrap">
+          <div class="digital-clock" aria-label="Horário atual de São Paulo">
+            <div class="digital-clock-status"><span class="digital-clock-dot"></span> HORA LOCAL</div>
+            <div class="digital-time" aria-live="off">
+              <span id="digitalHours">--</span><span class="digital-time-separator">:</span><span class="digital-minutes" id="digitalMinutes">--</span>
+              <span class="digital-seconds" id="digitalSeconds">--</span>
+            </div>
+            <div class="digital-date" id="digitalDate">Carregando data...</div>
+          </div>
+        </div>
+      </article>
+
+     <!-- 02 Clima -->
+      <article class="widget weather-widget">
+        <div class="widget-head"><span>Clima:</span><span data-bind="profile.city">São Paulo</span></div>
+        <div class="weather-body">
+          <div class="weather-main">
+            <img class="weather-icon" id="weatherIcon" src="assets/weather/cloudy.svg" alt="Carregando clima" width="64" height="64">
+            <div class="weather-text">
+              <div class="weather-temp" id="weatherTemp">--°</div>
+              <div class="weather-desc" id="weatherDesc">Carregando…</div>
+            </div>
+          </div>
+          <div class="weather-meta">
+            <span title="Máxima / Mínima">🌡️ <strong id="weatherRange">--° / --°</strong></span>
+            <span title="Umidade">💧 <strong id="weatherHum">--%</strong></span>
+            <span title="Vento">💨 <strong id="weatherWind">-- km/h</strong></span>
+            <span title="Chance de chuva">☔ <strong id="weatherRain">--%</strong></span>
+            <span title="Sensação térmica">🌡️ <strong id="weatherFeelsLike">--°</strong></span>
+            <span title="Índice UV">🔆 <strong id="weatherUv">--</strong></span>
+            <span title="Nascer do sol">🌅 <strong id="weatherSunrise">--:--</strong></span>
+            <span title="Pôr do sol">🌇 <strong id="weatherSunset">--:--</strong></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 Sobre -->
+      <article class="widget about-widget">
+        <div class="widget-head"><span>Sobre</span><span data-bind="profile.role">Software Engineer</span></div>
+        <p data-bind="profile.about"></p>
+        <div class="tags" id="skillTags"></div>
+      </article>
+		
+      <!-- 04 Quem Sou -->
+      <article class="widget latest-widget">
+       <div class="widget-head">
+         <span>Quem Sou</span>
+         <button class="plain-link" data-action="latest">Saiba Mais ↗</button>
+       </div>
+       <div class="latest-art">
+         <!-- Foto no lugar do dispositivo -->
+         <img src="./assets/Foto_Frank1.png" alt="Frank Oliveira" style="width:100%; height:100%; object-fit:cover; border-radius:0;">
+       </div>
+      </article>
+
+      <!-- 05 Ultimos Projetos -->
+      <article class="widget projects-widget">
+        <div class="widget-head"><span>Últimos Projetos</span><span>Selected work</span></div>
+        <div class="project-list" id="projectList"></div>
+      </article>
+
+      <!-- 06 Projetos em Andamento -->
+      <article class="widget social-widget">
+        <div class="widget-head"><span>Projetos em Andamento</span><span>Saiba Mais</span></div>
+        <div class="socials" id="socialList"></div>
+      </article>
+
+      <!-- 07 Projetos Entregues -->
+      <article class="widget experience-widget">
+        <div class="widget-head"><span>Projetos Entregues</span><span>Role o Scroll</span></div>
+        <div class="scroll-list" id="experienceList"></div>
+      </article>
+
+      <!-- 08 Projetos Futuros -->
+      <article class="widget side-widget">
+        <div class="widget-head"><span>Projetos Futuros</span><span>Ate 2027</span></div>
+        <div class="scroll-list" id="sideList"></div>
+      </article>
+
+      <!-- 09 NEWSLETTER -->
+      <article class="widget newsletter-widget">
+        <div class="widget-head"><span>Newsletter</span><span>Monthly</span></div>
+        <form id="newsletterForm">
+          <input type="email" placeholder="seu@email.com" required aria-label="Seu e-mail">
+          <button type="submit" class="pill-btn">Inscrever-se <span>→</span></button>
+        </form>
+        <small id="newsletterMessage"></small>
+      </article>
+
+      <!-- 10 TESTIMONIAL -->
+      <article class="widget quote-widget">
+        <div class="widget-head"><span>Depoimento</span><span>Feedback</span></div>
+        <div class="quote">“<span data-bind="testimonial.text"></span>”</div>
+        <div class="person"><div class="avatar" data-bind="testimonial.initials">AM</div><div><strong data-bind="testimonial.name"></strong><small data-bind="testimonial.role"></small></div></div>
+      </article>
+
+      <!-- 11 EXPERIENCE YEARS -->
+      <article class="widget years-widget">
+        <div class="widget-head"><span>Years of Experience</span><span>Since <span data-bind="profile.startYear"></span></span></div>
+        <div class="years" data-bind="profile.years">8</div>
+      </article>
+
+      <!-- 12 CURRICULO -->
+      <article class="widget cv-widget">
+        <div class="widget-head"><span>Curriculo Vitae</span><span>PDF</span></div>
+        <div class="cv-actions">
+          <button class="pill-btn" data-action="cv-view">View <span>↗</span></button>
+          <button class="pill-btn" data-action="cv-download">Download <span>↓</span></button>
+        </div>
+      </article>
+
+      <!-- 13 SKILLS -->
+      <article class="widget skills-widget">
+        <div class="widget-head"><span>Core Skills</span><span>Tech Stack</span></div>
+        <div class="skill-bars">
+          <div class="skill-item"><span>JavaScript / TypeScript</span><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+          <div class="skill-item"><span>HTML / CSS</span><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+          <div class="skill-item"><span>React / Vue</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+          <div class="skill-item"><span>Node.js</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+        </div>
+      </article>
+
+      <!-- 14 CODING STATS -->
+      <article class="widget coding-widget">
+        <div class="widget-head"><span>Coding Stats</span><span>Lifetime</span></div>
+        <div class="stat-grid">
+          <div class="stat-item"><strong id="loc">127K+</strong><span>Lines Written</span></div>
+          <div class="stat-item"><strong id="commits">1.8K+</strong><span>Commits</span></div>
+          <div class="stat-item"><strong id="repos">42</strong><span>Repos</span></div>
+          <div class="stat-item"><strong id="prs">89</strong><span>Pull Requests</span></div>
+        </div>
+      </article>
+
+      <!-- 15 LANGUAGES -->
+      <article class="widget langs-widget">
+        <div class="widget-head"><span>Linguagens</span><span>Nivel</span></div>
+        <div class="lang-list">
+          <div class="lang-item"><span>🇧🇷 Português</span><span class="level">Native</span></div>
+          <div class="lang-item"><span>🇺🇸 English</span><span class="level">Fluent</span></div>
+          <div class="lang-item"><span>🇪🇸 Español</span><span class="level">Intermediate</span></div>
+          <div class="lang-item"><span>🇫🇷 Français</span><span class="level">Basic</span></div>
+        </div>
+      </article>
+
+      <!-- 16 EDUCATION -->
+      <article class="widget edu-widget">
+        <div class="widget-head"><span>Education</span><span>Academic</span></div>
+        <div class="edu-list">
+          <div class="edu-item">
+            <strong>B.Sc. Computer Science</strong>
+            <span>Universidade de São Paulo • 2018–2022</span>
+          </div>
+          <div class="edu-item">
+            <strong>Full Stack Development</strong>
+            <span>Certifications • 2023</span>
+          </div>
+          <div class="edu-item">
+            <strong>Full Stack Development</strong>
+            <span>Certifications • 2023</span>
+          </div>
+          <div class="edu-item">
+            <strong>Full Stack Development</strong>
+            <span>Certifications • 2023</span>
+          </div>			
+        </div>
+      </article>
+
+      <!-- 17 CERTIFICADOS -->
+      <article class="widget certs-widget">
+        <div class="widget-head"><span>Certifications</span><span>Verified</span></div>
+        <div class="cert-list">
+          <button class="cert-item">AWS Certified Cloud Practitioner</button>
+          <button class="cert-item">Google UX Design Professional Certificate</button>
+          <button class="cert-item">Meta Front-End Developer</button>
+          <button class="cert-item">Oracle Java Foundations</button>
+        </div>
+      </article>
+
+      <!-- 18 TOOLS -->
+      <article class="widget tools-widget">
+        <div class="widget-head"><span>Tools</span><span>Daily Use</span></div>
+        <div class="tools-grid">
+          <span class="tool-tag">VS Code</span>
+          <span class="tool-tag">Git</span>
+          <span class="tool-tag">Figma</span>
+          <span class="tool-tag">Docker</span>
+          <span class="tool-tag">Postman</span>
+          <span class="tool-tag">Notion</span>
+          <span class="tool-tag">Terminal</span>
+          <span class="tool-tag">Linux</span>
+        </div>
+		<div class="tools-grid">
+          <span class="tool-tag">VS Code</span>
+          <span class="tool-tag">Git</span>
+          <span class="tool-tag">Figma</span>
+          <span class="tool-tag">Docker</span>
+          <span class="tool-tag">Postman</span>
+          <span class="tool-tag">Notion</span>
+          <span class="tool-tag">Terminal</span>
+          <span class="tool-tag">Linux</span>
+        </div>
+		<div class="tools-grid">
+          <span class="tool-tag">VS Code</span>
+          <span class="tool-tag">Git</span>
+          <span class="tool-tag">Figma</span>
+          <span class="tool-tag">Docker</span>
+          <span class="tool-tag">Postman</span>
+          <span class="tool-tag">Notion</span>
+          <span class="tool-tag">Terminal</span>
+          <span class="tool-tag">Linux</span>
+        </div>
+      </article>
+
+      <!-- 19 INTERESTS -->
+      <article class="widget interests-widget">
+        <div class="widget-head"><span>Interests</span><span>Beyond Code</span></div>
+        <div class="interests-grid">
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎨</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">📚</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🏃</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">✈️</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎵</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+			
+        </div>
+      </article>
+
+      <!-- 20 AVAILABILITY -->
+      <article class="widget avail-widget">
+        <img class="avail-image" src="assets/002.png" alt="Imagem de disponibilidade">
+      </article>
+
+      <!-- 21 WORKFLOW -->
+   <article class="widget workflow-widget">
+       <div class="widget-head">
+         <span>Workflow</span>
+         <span>Process</span>
+      </div>
+      <div class="workflow-steps">
+          <div class="step">1. Discovery</div>
+          <div class="step">2. Design</div>
+          <div class="step">3. Develop</div>
+          <div class="step">4. Deploy</div>
+          <div class="step">5. Iterate</div>
+		  <div class="step">1. Discovery</div>
+          <div class="step">2. Design</div>
+          <div class="step">3. Develop</div>
+          <div class="step">4. Deploy</div>
+          <div class="step">5. Iterate</div>
+       </div>
+	      <div class="workflow-steps">
+          <div class="step">1. Discovery</div>
+          <div class="step">2. Design</div>
+          <div class="step">3. Develop</div>
+          <div class="step">4. Deploy</div>
+          <div class="step">5. Iterate</div>
+		  <div class="step">1. Discovery</div>
+          <div class="step">2. Design</div>
+          <div class="step">3. Develop</div>
+          <div class="step">4. Deploy</div>
+          <div class="step">5. Iterate</div>
+       </div>
+    </article>
+
+      <!-- 22 CLIENTS -->
+      <article class="widget clients-widget">
+         <div class="widget-head"><span>Clients</span><span>Trusted By</span></div>
+          <div class="client-logos">
+          <button class="client">TechCorp</button>
+          <button class="client">StartupX</button>
+          <button class="client">AgencyPro</button>
+          <button class="client">Freelance</button>
+		  <button class="client">TechCorp</button>
+          <button class="client">StartupX</button>
+          <button class="client">AgencyPro</button>
+          <button class="client">Freelance</button>
+         </div>
+      </article>
+
+      <!-- 23 MILESTONES -->
+      <article class="widget milestones-widget">
+        <div class="widget-head"><span>Milestones</span><span>Achievements</span></div>
+        <div class="milestone-list">
+          <div class="milestone"><strong>50+</strong><span>Projects Delivered</span></div>
+          <div class="milestone"><strong>30+</strong><span>Happy Clients</span></div>
+          <div class="milestone"><strong>8</strong><span>Awards Mentions</span></div>
+        </div>
+      </article>
+
+      <!-- 24 CODE QUALITY -->
+      <article class="widget quality-widget">
+        <div class="widget-head"><span>Code Quality</span><span>Standards</span></div>
+        <div class="quality-list">
+          <div class="quality-item">✅ Semantic Accessible HTML</div>
+          <div class="quality-item">✅ Responsive Mobile-First</div>
+          <div class="quality-item">✅ Clean Documented Code</div>
+          <div class="quality-item">✅ Optimized Performance</div>
+        </div>
+      </article>
+
+      <!-- 25 FRAMEWORKS -->
+      <article class="widget frameworks-widget">
+       <div class="widget-head"><span>Frameworks</span><span>Ecosystem</span></div>
+           <div class="fw-grid">
+           <button class="fw">Next.js</button>
+           <button class="fw">Vue</button>
+           <button class="fw">Tailwind</button>
+           <button class="fw">Express</button>
+           <button class="fw">NestJS</button>
+           <button class="fw">Svelte</button>
+        </div>
+      </article>
+
+      <!-- 26 DATABASES -->
+      <article class="widget db-widget">
+        <div class="widget-head"><span>Databases</span><span>Data Layer</span></div>
+        <div class="db-list">
+          <div class="db-item">
+            <span class="db-icon">🗄️</span>
+            <span class="db-name">PostgreSQL</span>
+          </div>
+          <div class="db-item">
+            <span class="db-icon">🍃</span>
+            <span class="db-name">MongoDB</span>
+          </div>
+          <div class="db-item">
+            <span class="db-icon">🐬</span>
+            <span class="db-name">MySQL</span>
+          </div>
+          <div class="db-item">
+            <span class="db-icon">⚡</span>
+            <span class="db-name">Redis</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 27 HOBBY PROJECTS -->
+      <article class="widget hobby-widget">
+        <div class="widget-head"><span>Hobby Projects</span><span>Just for Fun</span></div>
+        <div class="hobby-list">
+          <div class="hobby-item">Terminal Portfolio</div>
+          <div class="hobby-item">CLI Task Manager</div>
+          <div class="hobby-item">Weather Dashboard</div>
+        </div>
+      </article>
+
+      <!-- 28 READING LIST -->
+      <article class="widget reading-widget">
+        <div class="widget-head"><span>Reading</span><span>Currently</span></div>
+        <div class="reading-book">
+          <strong>Clean Code</strong>
+          <span>Robert C. Martin</span>
+          <div class="book-progress">
+            <div class="book-fill" style="width:68%"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 29 CONTACT INFO -->
+      <article class="widget contact-widget">
+        <div class="widget-head"><span>Contato
+           Direto</span><span>Reach Out</span></div>
+        <div class="contact-items">
+          <div class="contact-item">📧 yori35anos@gmail.com</div>
+          <div class="contact-item">📍 São Paulo — Brazil</div>
+          <div class="contact-item">🕒 UTC-3 • GMT-3</div>
+        </div>
+      </article>
+
+      <!-- 30 SOCIAL STATS -->
+      <article class="widget socialstats-widget">
+        <div class="widget-head"><span>GitHub</span><span>Open Source</span></div>
+        <div class="gh-stats">
+          <div class="gh-stat"><strong>2.4K</strong><span>Contributions</span></div>
+          <div class="gh-stat"><strong>156</strong><span>Repositories</span></div>
+          <div class="gh-stat"><strong>890+</strong><span>Followers</span></div>
+        </div>
+      </article>
+
+      <!-- 31 TESTIMONIALS GRID -->
+      <article class="widget testimonial-grid-widget">
+        <div class="widget-head"><span>What People Say</span><span>Feedback</span></div>
+        <div class="mini-quotes">
+          <div class="mini-quote">"Fast precise work!" — <em>Client A</em></div>
+          <div class="mini-quote">"Great code quality." — <em>Client B</em></div>
+          <div class="mini-quote">"Delivered ahead of schedule." — <em>Client C</em></div>
+          <div class="mini-quote">"O Frank entendeu exatamente o que precisávamos e entregou um ótimo resultado, com muita atenção aos detalhes." — <em>Cliente D</em></div>
+        </div>
+      </article>
+
+      <!-- 32 BRAND COLORS -->
+      <article class="widget colors-widget">
+        <div class="widget-head"><span>Brand Palette</span><span>Design System</span></div>
+        <div class="color-swatches">
+          <div class="swatch" style="background:#00b39f">#00b39f</div>
+          <div class="swatch" style="background:#1c1c1e;color:#fff">#1c1c1e</div>
+          <div class="swatch" style="background:#ffffff;color:#000">#ffffff</div>
+          <div class="swatch" style="background:#98989f;color:#fff">#98989f</div>
+        </div>
+      </article>
+
+      <!-- 19 INTERESTS -->
+      <article class="widget interests-widget">
+        <div class="widget-head"><span>Escolha seu</span><span>Interesse</span></div>
+        <div class="interests-grid">
+          <div class="interest-item">
+            <a href="001.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎨</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">📚</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🏃</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">✈️</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎵</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+			
+        </div>
+      </article>
+
+      <!-- 19 INTERESTS -->
+      <article class="widget interests-widget">
+        <div class="widget-head"><span>Interests</span><span>Beyond Code</span></div>
+        <div class="interests-grid">
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎨</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">📚</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🏃</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">✈️</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎵</span>
+            <span class="interest-name">Reading</span>
+           </a>
+          </div>
+          <div class="interest-item">
+            <a href="galeria.html" style="text-decoration: none; color: inherit;">
+            <span class="interest-icon">🎮</span>
+            <span class="interest-name">Games</span>
+           </a>			  
+          </div>
+        </div>
+      </article>
+		
+      <!-- GRÁFICO RADAR -->
+      <article class="widget dbc-widget">
+        <div class="widget-head">
+          <span>Perfil Técnico</span>
+          <span>Competências</span>
+        </div>
+        <div class="radar-container">
+          <svg id="radarChart" viewBox="0 0 420 420" role="group" aria-label="Radar interativo de competências técnicas"></svg>
+          <div class="radar-insight" id="radarInsight" aria-live="polite">
+            <span class="radar-insight-label">VISÃO GERAL</span>
+            <strong id="radarInsightTitle">Perfil equilibrado</strong>
+            <span id="radarInsightText">Passe o cursor ou selecione um eixo para explorar as competências.</span>
+          </div>
+        </div>
+      </article>
+      <article class="widget auth-widget">
+        <div class="widget-head"><span>Área do Cliente</span><span>Cadastro e login</span></div>
+        <form id="customerAuthForm" class="auth-form">
+          <label for="customerEmail">E-mail</label>
+          <input id="customerEmail" name="email" type="email" autocomplete="email" required>
+          <label for="customerPassword">Senha</label>
+          <input id="customerPassword" name="password" type="password" autocomplete="current-password" minlength="6" required>
+          <div class="auth-actions">
+            <button type="submit" class="pill-btn">Entrar</button>
+            <button type="button" class="pill-btn" id="customerSignup">Criar conta</button>
+          </div>
+        </form>
+        <div class="auth-session" id="customerSession" hidden>
+          <p id="customerEmailDisplay"></p>
+          <button type="button" class="pill-btn" id="customerLogout">Sair</button>
+        </div>
+        <p class="auth-message" id="customerAuthMessage" role="status" aria-live="polite"></p>
+      </article>
+      <article class="widget compass-widget">
+        <div class="widget-head"><span>Mockups</span><span>Escolha o seu</span></div>
+        <div class="compass-image-content">
+          <div class="compass-image-frame">
+            <img class="compass-image-preview" src="assets/003.png" alt="Imagem de exemplo do widget Bússola">
+          </div>
+        </div>
+      </article>
+	  </section><br>
+	  
+	  <!-- PLAYER DE MÍDIA PREMIUM -->
+      <article class="widget media-widget">
+        <div class="widget-head">
+          <span>Reprodutor</span>
+          <span id="media-type-label">Video</span>
+        </div>
+
+        <div class="media-container">
+          <!-- Área de Vídeo -->
+          <div class="video-wrapper" id="videoWrapper">
+            <video id="mainPlayer" class="player-element" preload="metadata">
+              <source src="./assets/videos/WhatsApp Video 2026-11-02 at 18.09.06.mp4" type="video/mp4" id="videoSource">
+              Seu navegador não suporta reprodução de mídia.
+            </video>
+            <button class="big-play-btn" id="bigPlayBtn" aria-label="Reproduzir"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button>
+          </div>
+
+          <!-- Área de Áudio (visível apenas no modo áudio) -->
+          <div class="audio-cover" id="audioCover" style="display: none;">
+            <div class="audio-art">🎧</div>
+            <div class="audio-info">
+              <strong id="audioTitle">Faixa de Áudio</strong>
+              <span id="audioArtist">Artista / Projeto</span>
+            </div>
+          </div>
+
+          <!-- Barra de Progresso -->
+          <div class="progress-container">
+            <div class="progress-bg">
+              <div class="progress-fill" id="progressFill"></div>
+              <input type="range" class="progress-slider" id="progressSlider" min="0" max="100" value="0" aria-label="Progresso">
+            </div>
+            <div class="time-display">
+              <span id="currentTime">0:00</span>
+              <span id="duration">0:00</span>
+            </div>
+          </div>
+
+          <!-- Controles -->
+          <div class="controls-bar">
+            <button class="control-btn" id="rewindBtn" title="Retroceder 10s" aria-label="Retroceder 10 segundos"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5v14l-9-7zm11 0v14l-9-7z"/></svg></button>
+            <button class="control-btn play-pause" id="playPauseBtn" title="Reproduzir" aria-label="Reproduzir"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button>
+            <button class="control-btn" id="forwardBtn" title="Avançar 10s" aria-label="Avançar 10 segundos"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 5v14l9-7zM2 5v14l9-7z"/></svg></button>
+            <div class="volume-group">
+              <button class="control-btn" id="muteBtn" title="Silenciar" aria-label="Silenciar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13"/></svg></button>
+              <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" aria-label="Volume">
+            </div>
+            <button class="control-btn" id="speedBtn" title="Velocidade">1x</button>
+            <button class="control-btn" id="fullscreenBtn" title="Tela Cheia" aria-label="Tela cheia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg></button>
+          </div>
+
+          <!-- Alternância Vídeo/Áudio -->
+          <div class="media-tabs">
+            <button class="media-tab active" data-mode="video">📹 Vídeo</button>
+            <button class="media-tab" data-mode="audio">🎵 Áudio</button>
+          </div>
+        </div>
+      </article>
+	  
+	  <br>
+	  <section>
+      <!-- REDES SOCIAIS — Widget -->
+      <article class="widget social-widget social-network-widget">
+        <div class="widget-head">
+          <span>Redes</span>
+          <span>Conecte-se</span>
+        </div>
+        <div class="socials" id="socialList">
+          <a href="https://github.com" target="_blank" rel="noopener" class="social github" aria-label="GitHub">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="social linkedin" aria-label="LinkedIn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="social twitter" aria-label="Twitter/X">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.815L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="social instagram" aria-label="Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+			<br>
+          <a href="mailto:frank@email.com" class="social email" aria-label="E-mail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </a>
+          <a href="https://youtube.com/@SEUCANAL" target="_blank" rel="noopener" class="social youtube" aria-label="YouTube">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+         </div>
+      </article>		
+	  </section>
+    <footer class="footer">
+      <span>© Frank Oliveira Fernandes - Todos os direitos reservados. </span>
+      <span>Desenvolvido em HTML5, CSS3 e JAVASCRIPT.</span>
+    </footer>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">×</button>
+      <span class="eyebrow">Project</span>
+      <h2 id="modalTitle">Project</h2>
+      <p id="modalText"></p>
+      <div id="modalTags" class="tags"></div>
+      <a id="modalLink" class="pill-btn" href="#" target="_blank" rel="noopener">Abrir projeto ↗</a>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
